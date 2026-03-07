@@ -9,7 +9,7 @@ AddressBookApp is a Spring Boot based application used to manage contacts in an 
 - Displayed the message **"Welcome to Address Book Program"** when the program starts.
 - Initialized the base structure of the Address Book application on the **main branch**.
 
-[START](https://github.com/Prashant-kumar-sharma/AddressBookApp)
+[START](https://github.com/gautam-kumar71/AddressBookApp)
 
 ---
 # Section 1: Streams API
@@ -28,7 +28,7 @@ Implemented the ability to create a **Contact** with required personal and addre
 
 **GitHub Branch**
 
-[feature/UC1-create-contact](https://github.com/Prashant-kumar-sharma/AddressBookApp/tree/feature/UC1-create-contact)
+[feature/UC1-create-contact](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC1-create-contact)
 
 ---
 
@@ -44,6 +44,6 @@ Implemented functionality to add a new contact to the Address Book using console
 
 **GitHub Branch**
 
-[feature/UC2-add-contact](https://github.com/Prashant-kumar-sharma/AddressBookApp/tree/feature/UC2-add-contact)
+[feature/UC2-add-contact](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC2-add-contact)
 
 ---
