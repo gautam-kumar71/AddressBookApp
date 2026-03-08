@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Other files
+src/test/resources/testdata/*.txt
+src/test/resources/testdata/*.csv
