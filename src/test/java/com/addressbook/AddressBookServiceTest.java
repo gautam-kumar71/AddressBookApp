@@ -2,15 +2,19 @@ package com.addressbook;
 
 import com.addressbook.entity.AddressBook;
 import com.addressbook.entity.Contact;
-import com.addressbook.util.FileUtil;
-import com.addressbook.util.CSVUtil;
-import com.addressbook.util.JSONUtil;
+import com.addressbook.repository.ContactRepository;
 import com.addressbook.service.AddressBookService;
+import com.addressbook.util.CSVUtil;
+import com.addressbook.util.FileUtil;
+import com.addressbook.util.JSONUtil;
+
 import org.junit.jupiter.api.*;
-import java.util.*;
+
 import java.io.*;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class AddressBookServiceTest {
 
@@ -28,10 +32,16 @@ public class AddressBookServiceTest {
         );
     }
 
+    private AddressBookService service;
+
+    @BeforeEach
+    void setup() {
+        ContactRepository repository = mock(ContactRepository.class);
+        service = new AddressBookService(repository);
+    }
+
     @Test
     public void givenValidContact_whenAdded_shouldReturnSameContact() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact contact = createContact();
 
@@ -44,8 +54,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContact_whenAdded_shouldCreateAddressBookAutomatically() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact contact = createContact();
 
         service.addContact("office", contact);
@@ -56,8 +64,6 @@ public class AddressBookServiceTest {
     @Disabled
     @Test
     public void givenMultipleContacts_whenAdded_shouldStoreAllContacts() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = createContact();
         Contact c2 = createContact();
@@ -71,8 +77,6 @@ public class AddressBookServiceTest {
 
     @Test
     public void givenDifferentAddressBooks_whenAddingContacts_shouldSeparateData() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = createContact();
         Contact c2 = createContact();
@@ -90,8 +94,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContactWithNullValues_whenAdded_shouldNotCrash() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact contact = new Contact();
 
         Contact result = service.addContact("personal", contact);
@@ -101,8 +103,6 @@ public class AddressBookServiceTest {
 
     @Test
     public void givenContactWithEmptyStrings_whenAdded_shouldStoreSuccessfully() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
                 "",
@@ -125,8 +125,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenSameContactTwice_whenAdded_shouldAllowDuplicatesForNow() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact c1 = createContact();
         Contact c2 = createContact();
 
@@ -139,8 +137,6 @@ public class AddressBookServiceTest {
 
     @Test
     public void givenLongPhoneNumber_whenAdded_shouldStoreContact() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
                 "Tarus",
@@ -162,8 +158,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenInvalidEmail_whenAdded_shouldStillStoreContact() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact contact = new Contact(
                 "Tarus",
                 "Prabhat",
@@ -184,8 +178,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMultipleAddressBooks_whenContactsAdded_shouldMaintainSeparateLists() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact c1 = createContact();
         Contact c2 = createContact();
 
@@ -201,8 +193,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenExistingContact_whenUpdated_shouldReturnUpdatedContact() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact original = new Contact(
                 "Tarus",
@@ -242,8 +232,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenNonExistingContact_whenUpdate_shouldReturnNull() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact updated = new Contact();
 
         Contact result = service.updateContact(
@@ -259,8 +247,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMissingAddressBook_whenUpdate_shouldReturnNull() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact updated = new Contact();
 
         Contact result = service.updateContact(
@@ -275,8 +261,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenExistingContact_whenDeleted_shouldReturnTrue() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
                 "Tarus",
@@ -303,8 +287,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMissingContact_whenDelete_shouldReturnFalse() {
 
-        AddressBookService service = new AddressBookService();
-
         boolean result = service.deleteContact(
                 "personal",
                 "Unknown",
@@ -317,8 +299,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMissingAddressBook_whenDelete_shouldReturnFalse() {
 
-        AddressBookService service = new AddressBookService();
-
         boolean result = service.deleteContact(
                 "unknownBook",
                 "Tarus",
@@ -330,8 +310,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenMultipleContacts_whenAdded_shouldStoreAllContacts2() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact(
                 "Tarus","Prabhat","New City","Ariana","Geornite",
@@ -350,15 +328,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenEmptyAddressBook_whenGetContacts_shouldReturnEmptyList() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.getContacts("personal").size());
     }
     
     @Test
     public void givenContactsInDifferentBooks_whenFetched_shouldRemainSeparate() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
         Contact c2 = new Contact("Rahul","Verma","","","","","","");
@@ -369,12 +343,10 @@ public class AddressBookServiceTest {
         assertEquals(1, service.getContacts("personal").size());
         assertEquals(1, service.getContacts("office").size());
     }
- 
+    
     @Disabled
     @Test
     public void givenDuplicateContacts_whenAdded_shouldAllowDuplicates() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c = new Contact("Tarus","Prabhat","","","","","","");
 
@@ -386,8 +358,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenLargeNumberOfContacts_whenAdded_shouldHandleCorrectly() {
-
-        AddressBookService service = new AddressBookService();
 
         for(int i=0;i<100;i++) {
 
@@ -403,8 +373,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenNewBookName_whenCreated_shouldReturnAddressBook() {
 
-        AddressBookService service = new AddressBookService();
-
         AddressBook book = service.createAddressBook("personal");
 
         assertEquals("personal", book.getName());
@@ -412,8 +380,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenDuplicateBookName_whenCreated_shouldReturnExistingBook() {
-
-        AddressBookService service = new AddressBookService();
 
         AddressBook b1 = service.createAddressBook("personal");
         AddressBook b2 = service.createAddressBook("personal");
@@ -424,8 +390,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMultipleBooks_whenCreated_shouldStoreAll() {
 
-        AddressBookService service = new AddressBookService();
-
         service.createAddressBook("personal");
         service.createAddressBook("office");
 
@@ -434,8 +398,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContactsInDifferentBooks_shouldRemainSeparate() {
-
-        AddressBookService service = new AddressBookService();
 
         service.createAddressBook("personal");
         service.createAddressBook("office");
@@ -453,8 +415,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenBooksCreated_whenFetched_shouldReturnDictionary() {
 
-        AddressBookService service = new AddressBookService();
-
         service.createAddressBook("personal");
         service.createAddressBook("office");
 
@@ -464,8 +424,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenDuplicateContact_whenAdded_shouldThrowException() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact(
                 "Tarus","Prabhat","New City","Ariana",
@@ -485,8 +443,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenSameContactInDifferentBooks_shouldBeAllowed() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact c = new Contact("Tarus","Prabhat","","","","","","");
 
         service.addContact("personal", c);
@@ -498,8 +454,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenDifferentContacts_whenAdded_shouldAllow() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
         Contact c2 = new Contact("Rahul","Verma","","","","","","");
@@ -513,8 +467,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenExistingDuplicate_whenChecked_shouldPreventDuplicate() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
 
         service.addContact("personal", c1);
@@ -526,8 +478,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenSearchByCity_shouldReturnMatches() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
         Contact c2 = new Contact("Rahul","Verma","","Delhi","DL","","","");
@@ -541,8 +491,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenSearchByState_shouldReturnMatches() {
 
-        AddressBookService service = new AddressBookService();
-
         Contact c1 = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
         Contact c2 = new Contact("Rahul","Verma","","Delhi","DL","","","");
 
@@ -555,15 +503,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenUnknownCity_whenSearch_shouldReturnEmptyList() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.searchByCity("Unknown").size());
     }
     
     @Test
     public void givenDifferentCaseCity_whenSearch_shouldStillMatch() {
-
-        AddressBookService service = new AddressBookService();
 
         Contact c = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
         service.addContact("personal", c);
@@ -573,8 +517,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenMultipleContactsSameCity_whenSearch_shouldReturnAll() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
@@ -587,8 +529,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenGroupedByCity_shouldReturnCityMap() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
@@ -605,8 +545,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenMultipleContactsSameCity_whenGrouped_shouldReturnList() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
 
@@ -621,8 +559,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenGroupedByState_shouldReturnStateMap() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
 
@@ -634,15 +570,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenNoContacts_whenGrouped_shouldReturnEmptyMap() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.viewPersonsByCity().size());
     }
     
     @Test
     public void givenContactsAcrossBooks_whenGrouped_shouldCombineResults() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
@@ -658,8 +590,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenCountByCity_shouldReturnCorrectCounts() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
 
@@ -673,8 +603,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenCountByState_shouldReturnCorrectCounts() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
@@ -691,15 +619,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenNoContacts_whenCount_shouldReturnEmptyMap() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.countContactsByCity().size());
     }
     
     @Test
     public void givenContactsAcrossBooks_whenCount_shouldCombineResults() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
@@ -715,8 +639,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenCityDifferentCase_whenCount_shouldTreatSeparately() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
 
@@ -730,8 +652,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenSortedByName_shouldReturnAlphabeticalOrder() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","","","","",""));
@@ -750,15 +670,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenEmptyAddressBook_whenSorted_shouldReturnEmptyList() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.sortContactsByName("personal").size());
     }
     
     @Test
     public void givenSingleContact_whenSorted_shouldReturnSameContact() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","","","","",""));
@@ -770,8 +686,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenAlreadySortedContacts_whenSorted_shouldRemainSame() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Amit","Sharma","","","","","",""));
@@ -787,8 +701,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenSortedByCity_shouldReturnSortedList() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","","","",""));
 
@@ -802,8 +714,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenSortedByState_shouldReturnSortedList() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","","Geornite","","",""));
@@ -819,8 +729,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenSortedByZip_shouldReturnSortedList() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","","","567834","",""));
 
@@ -835,15 +743,11 @@ public class AddressBookServiceTest {
     @Test
     public void givenEmptyBook_whenSorted_shouldReturnEmptyList() {
 
-        AddressBookService service = new AddressBookService();
-
         assertEquals(0, service.sortContactsByCity("personal").size());
     }
     
     @Test
     public void givenSingleContact_whenSorted_shouldReturnSame() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","","","",""));
@@ -853,8 +757,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenSavedToFile_shouldCreateFile() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","567834","",""));
@@ -913,8 +815,6 @@ public class AddressBookServiceTest {
     @Test
     public void givenContacts_whenSavedToCSV_shouldCreateCSVFile() {
 
-        AddressBookService service = new AddressBookService();
-
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","567834","",""));
 
@@ -963,8 +863,6 @@ public class AddressBookServiceTest {
     
     @Test
     public void givenContacts_whenSavedToJSON_shouldCreateFile() {
-
-        AddressBookService service = new AddressBookService();
 
         service.addContact("personal",
                 new Contact("Tarus","Prabhat","","Ariana","Geornite","567834","",""));
