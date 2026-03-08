@@ -199,21 +199,22 @@ Implemented functionality to sort all contact entries in the Address Book alphab
 
 ---
 
-## UC12 – Ability to Sort Entries by City, State, or Zip
+# Section 2: IO Streams 
+---
 
-Implemented functionality to sort contact entries in the Address Book based on city, state, or zip code.
+## UC13 – Ability to Read or Write Address Book to a File (File IO)
+
+Implemented functionality to store and retrieve Address Book contacts using Java File IO.
 
 **Features Implemented**
 
-- Created **separate functions** to sort contacts by:
-  - City
-  - State
-  - Zip
-- Used **Collection Library** for sorting operations.
-- Used **Java Streams** to perform sorting and display results in the console.
+- Used **Java File IO** to write Address Book data to a file.
+- Implemented functionality to **read contacts from the file**.
+- Stored contact details such as name, address, city, state, zip, phone, and email.
+- Displayed file content in the **console** after reading.
 
 **GitHub Branch**
 
-[feature/UC12-sort-contacts-by-city-state-zip](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC12-sort-contacts-by-city-state-zip)
+[feature/UC13-read-write-addressbook-file-io](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC13-read-write-addressbook-file-io)
 
 ---
