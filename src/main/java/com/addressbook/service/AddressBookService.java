@@ -3,6 +3,7 @@ package com.addressbook.service;
 import com.addressbook.entity.AddressBook;
 import com.addressbook.entity.Contact;
 import org.springframework.stereotype.Service;
+import com.addressbook.util.FileUtil;
 
 import java.util.*;
 import java.util.stream.*;
@@ -222,5 +223,22 @@ public class AddressBookService {
                 .stream()
                 .sorted(Comparator.comparing(Contact::getZip))
                 .collect(Collectors.toList());
+    }
+    
+    public void saveContactsToFile(String bookName, String filePath) {
+
+        AddressBook book = addressBooks.get(bookName);
+
+        if(book == null) {
+            return;
+        }
+
+        FileUtil.writeContactsToFile(filePath, book.getContacts());
+    }
+
+
+    public List<Contact> loadContactsFromFile(String filePath) {
+
+        return FileUtil.readContactsFromFile(filePath);
     }
 }
