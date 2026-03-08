@@ -2,15 +2,13 @@ package com.addressbook.service;
 
 import com.addressbook.entity.AddressBook;
 import com.addressbook.entity.Contact;
-import org.springframework.stereotype.Service;
 import com.addressbook.repository.ContactRepository;
-import com.addressbook.storage.CSVStorage;
 import com.addressbook.storage.ContactStorage;
 import com.addressbook.storage.FileStorage;
+import com.addressbook.storage.CSVStorage;
 import com.addressbook.storage.JSONStorage;
-import com.addressbook.util.CSVUtil;
-import com.addressbook.util.JSONUtil;
-import com.addressbook.util.FileUtil;
+
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.*;
@@ -26,12 +24,11 @@ public class AddressBookService {
         this.repository = repository;
     }
     
-
     public Contact addContact(String bookName, Contact contact) {
 
         AddressBook book = addressBooks.get(bookName);
 
-        if (book == null) {
+        if(book == null) {
             book = new AddressBook(bookName);
             addressBooks.put(bookName, book);
         }
@@ -51,7 +48,7 @@ public class AddressBookService {
 
         return contact;
     }
-    
+
     public Contact updateContact(String bookName,
             String firstName,
             String lastName,
@@ -81,7 +78,7 @@ public class AddressBookService {
 
         return null;
     }
-    
+
     public boolean deleteContact(String bookName,
             String firstName,
             String lastName) {
@@ -106,7 +103,7 @@ public class AddressBookService {
 
         return book.getContacts();
     }
-    
+
     public AddressBook createAddressBook(String name) {
 
         if(addressBooks.containsKey(name)) {
@@ -122,7 +119,7 @@ public class AddressBookService {
     public Map<String, AddressBook> getAllAddressBooks() {
         return addressBooks;
     }
-
+    
     public AddressBook getAddressBook(String name) {
         return addressBooks.get(name);
     }
@@ -251,11 +248,10 @@ public class AddressBookService {
 
         storage.save(filePath, book.getContacts());
     }
-
-
+    
     public List<Contact> loadContactsFromFile(String filePath) {
 
-    	ContactStorage storage = new FileStorage();
+        ContactStorage storage = new FileStorage();
 
         return storage.load(filePath);
     }
@@ -273,10 +269,9 @@ public class AddressBookService {
         storage.save(filePath, book.getContacts());
     }
 
-
     public List<Contact> loadContactsFromCSV(String filePath) {
 
-    	ContactStorage storage = new CSVStorage();
+        ContactStorage storage = new CSVStorage();
 
         return storage.load(filePath);
     }
@@ -296,7 +291,7 @@ public class AddressBookService {
 
     public List<Contact> loadContactsFromJSON(String filePath) {
 
-    	ContactStorage storage = new JSONStorage();
+        ContactStorage storage = new JSONStorage();
 
         return storage.load(filePath);
     }
@@ -304,5 +299,10 @@ public class AddressBookService {
     public List<Contact> getContactsFromDatabase() {
 
         return repository.getAllContacts();
+    }
+    
+    public int updateContactCity(String firstName, String lastName, String city) {
+
+        return repository.updateContactCity(firstName, lastName, city);
     }
 }

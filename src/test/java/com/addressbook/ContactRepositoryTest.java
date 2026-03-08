@@ -19,4 +19,16 @@ public class ContactRepositoryTest {
 
     	assertNotNull(repository.getAllContacts());
     }
+    
+    @Test
+    public void givenContact_whenCityUpdated_shouldReturnUpdatedRows() {
+
+        int rows = repository.updateContactCity(
+                "Rahul",
+                "Sharma",
+                "Pune"
+        );
+
+        assertTrue(rows > 0);
+    }
 }
