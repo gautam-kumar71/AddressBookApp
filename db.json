@@ -1,0 +1,22 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "firstName": "Rahul",
+      "lastName": "Sharma",
+      "city": "Bhopal"
+    },
+    {
+      "id": 2,
+      "firstName": "Priya",
+      "lastName": "Verma",
+      "city": "Indore"
+    },
+    {
+      "id": 3,
+      "firstName": "Amit",
+      "lastName": "Kumar",
+      "city": "Delhi"
+    }
+  ]
+}
