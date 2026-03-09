@@ -369,3 +369,29 @@ Implemented functionality to insert multiple contacts into the Address Book data
 [feature/UC21-add-multiple-contacts-multithreading](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC21-add-multiple-contacts-multithreading)
 
 ---
+
+## UC22 – Ability to Read Entries of Address Book from JSON Server
+
+Implemented functionality to retrieve Address Book contacts from a **JSON Server using REST APIs**.
+
+**Features Implemented**
+
+- Used **JSON Server** to simulate a REST API backend for Address Book data.
+- Used **REST Assured** to perform REST API calls from **JUnit Test cases**.
+- Retrieved contact entries from the JSON Server endpoint.
+- Updated the **Address Book in-memory list** with contacts fetched from the server.
+- Verified the functionality using **JUnit tests**.
+
+**Technologies Used**
+
+- **REST Assured** for REST API testing
+- **JUnit** for automated testing
+- **JSON Server** as a mock backend
+
+**JSON Server Endpoint**
+[JSON Server Endpoint](http://localhost:3000/contacts)
+
+
+**GitHub Branch**
+
+[feature/UC22-read-entries-from-jsonserver](https://github.com/gautam-kumar71/AddressBookApp/tree/feature/UC22-read-entries-from-jsonserver)
