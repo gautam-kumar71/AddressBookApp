@@ -1,22 +1,39 @@
 {
   "contacts": [
     {
-      "id": 1,
-      "firstName": "Rahul",
-      "lastName": "Sharma",
-      "city": "Bhopal"
+      "firstName": "Tarus",
+      "lastName": "Prabhat",
+      "address": "",
+      "city": "Mumbai",
+      "state": "MH",
+      "zip": "411001",
+      "phoneNumber": "9999999999",
+      "email": "tp@gmail.com",
+      "id": "1"
     },
     {
-      "id": 2,
+      "id": "2",
       "firstName": "Priya",
       "lastName": "Verma",
       "city": "Indore"
     },
     {
-      "id": 3,
+      "id": "3",
       "firstName": "Amit",
       "lastName": "Kumar",
       "city": "Delhi"
+    },
+    {
+      "id": "786b",
+      "firstName": "Amit",
+      "lastName": "Sharma",
+      "address": "",
+      "city": "Mumbai",
+      "state": "MH",
+      "zip": "400001",
+      "phoneNumber": "7777777777",
+      "email": "amit@gmail.com"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
