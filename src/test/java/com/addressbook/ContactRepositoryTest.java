@@ -27,12 +27,12 @@ public class ContactRepositoryTest {
     @Test
     public void givenContact_whenCityUpdated_shouldReturnUpdatedRows() {
 
-        int rows = repository.updateContactCity(
+    	int rows = repository.updateContactCity(
                 "Rahul",
                 "Sharma",
                 "Pune"
         );
-
+    	
         assertTrue(rows > 0);
     }
     
